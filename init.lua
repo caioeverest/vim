@@ -513,8 +513,23 @@ cmp.setup {
   sources = {
     { name = 'copilot' },
     { name = 'nvim_lsp' },
+    { name = "buffer" },
     { name = 'luasnip' },
   },
+  window = {
+    completion = {
+      autocomplete = false,
+      completeopt = 'menu,menuone,noinsert'
+    },
+    documentation = cmp.config.window.bordered {
+      border = "rounded",
+      winhighlight = "NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder",
+      max_width = 50,
+      min_width = 50,
+      max_height = math.floor(vim.o.lines * 0.4),
+      min_height = 3,
+    }
+  }
 }
 
 -- The line beneath this is called `modeline`. See `:help modeline`

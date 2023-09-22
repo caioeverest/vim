@@ -7,7 +7,6 @@ end
 local function my_on_attach(bufnr)
 	local api = require "nvim-tree.api"
 
-
 	-- default mappings
 	api.config.mappings.default_on_attach(bufnr)
 
@@ -25,14 +24,23 @@ return {
 		local api = require "nvim-tree.api"
 		require("nvim-tree").setup({
 			sort_by = "case_sensitive",
-			view = {
-				width = 30,
-			},
 			renderer = {
 				group_empty = true,
 			},
+			git = { ignore = true },
 			filters = {
 				dotfiles = true,
+				custom = {'.git'},
+			},
+			actions = {
+				open_file = {
+					quit_on_open = false, -- don't close when opening file
+				},
+			},
+			view = {
+				side = 'left',
+				width = 30,
+				adaptive_size = true,
 			},
 		})
 		vim.keymap.set('n', '\\\\', api.tree.toggle, { silent = true, nowait = true })
