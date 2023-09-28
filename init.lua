@@ -243,6 +243,11 @@ vim.keymap.set('n', '<Tab>', ':tabnext<cr>', { silent = true })
 -- Ctrl+g to duplicate visual selection
 vim.keymap.set('v', '<C-d>', 'y\'>p', { silent = true })
 
+-- Encode base64
+vim.keymap.set('v', '<leader>64e', 'c<c-r>=system("base64", @")<cr>', { silent = true })
+-- Decode base64
+vim.keymap.set('v', '<leader>64d', 'c<c-r>=system("base64 --decode", @")<cr>', { silent = true })
+
 ------------------------------------------------------------------------------
 -- [[ Moving around ]]
 ------------------------------------------------------------------------------
