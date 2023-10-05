@@ -339,6 +339,7 @@ local servers = {
   terraformls   = {},
   yamlls        = { filetypes = { 'yml', 'yaml' } },
   taplo         = { filetypes = { 'toml' } },
+  bashls        = { filetypes = { 'sh', 'bash' } },
 
   lua_ls = {
     Lua = {
