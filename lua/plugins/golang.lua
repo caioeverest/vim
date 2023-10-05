@@ -1,24 +1,10 @@
 -- golang.lua
 
-local on_attach = function (_, bufnr)
-	local nmap = function(keys, func, desc)
-		if desc then
-			desc = 'LSP: ' .. desc
-		end
-
-		vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
+local nmap = function(keys, func, desc)
+	if desc then
+		desc = 'LSP: ' .. desc
 	end
-
-	nmap('<leader>rn', ':GoRename<cr>', '[R]e[n]ame')
-	nmap('<leader>at', ':GoAddTag<cr>', '[A]dd[T]ags')
-	nmap('<leader>rt', ':GoRmTag<cr>', '[R]emove[T]ags')
-
-	nmap('<leader>fst', ':GoFillStruct<cr>', '[F]ill[S][T]ruct')
-	nmap('<leader>fsw', ':GoFillSwitch<cr>', '[F]ill[S][W]itch')
-	nmap('<leader>aer', ':GoIfErr<cr>', '[A]dd[E]rror')
-
-	nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-	nmap('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
+	vim.keymap.set('n', keys, func, { desc = desc })
 end
 
 local config = function ()
@@ -34,7 +20,7 @@ local config = function ()
 		comment_placeholder = 'ﳑ',
 		lsp_cfg             = { capabilities = capabilities },
 		lsp_gofumpt         = true, -- true: set default gofmt in gopls format to gofumpt
-		lsp_on_attach       = on_attach,
+		lsp_on_attach       = true,
 		dap_debug           = true,
 	})
 	vim.api.nvim_create_autocmd("BufWritePre", {
@@ -44,6 +30,17 @@ local config = function ()
 		end,
 		group = format_sync_grp,
 	})
+	nmap('<leader>rn', ':GoRename<cr>', '[R]e[n]ame')
+	nmap('<leader>at', ':GoAddTag<cr>', '[A]dd[T]ags')
+	nmap('<leader>rt', ':GoRmTag<cr>', '[R]emove[T]ags')
+
+	nmap('<leader>fst', ':GoFillStruct<cr>', '[F]ill[S][T]ruct')
+	nmap('<leader>fsw', ':GoFillSwitch<cr>', '[F]ill[S][W]itch')
+	nmap('<leader>aer', ':GoIfErr<cr>', '[A]dd[E]rror')
+
+	nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+	nmap('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
+
 end
 
 return {
