@@ -4,7 +4,44 @@
 if [[ -n $(git status --porcelain) ]]; then
   # There are changes
   git add .  # Add all changes to the staging area
-  git commit -m "Sync new changes"  # Commit with a generic message
+
+  # Get the staged changes as a diff
+  staged_diff=$(git diff --staged | jq -sR '.' | sed 's/^"\(.*\)"$/\1/')
+
+  # Create the prompt with the staged_diff
+  template=$(cat <<EOF
+{
+  "model": "gpt-3.5-turbo",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are a helpful assistant that generates commit messages."
+    },
+    {
+      "role": "user",
+      "content": "Generate a commit message and details for the following changes:\n\n$staged_diff\n\nSuggestion:"
+    }
+  ]
+}
+EOF)
+
+  echo "$template" > openai_req.json  # Use echo to write to the file
+
+
+  # Prompt ChatGPT for a commit message suggestion
+  api_key=$OPENAI_API_KEY
+  endpoint='https://api.openai.com/v1/chat/completions'
+  
+  # Execute request!
+  response=$(curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $api_key" -d @openai_req.json "$endpoint")
+  # echo "$response" | jq
+ 
+  # Extract the suggested commit message from the response
+  commit_message=$(echo "$response" | jq -r '.choices[0].message.content')
+  echo "Committing with message: $commit_message"
+
+  git commit -m "$commit_message"  # Commit with a generic message
+  rm openai_req.json
 else
   echo "No changes detected"
 fi
