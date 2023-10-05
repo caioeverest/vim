@@ -23,6 +23,7 @@ return  {
     luasnip.config.setup {}
 
     cmp.setup {
+      preselect = require('cmp').PreselectMode.None,
       sources = {
 	{ name = 'copilot' },
 	{ name = 'nvim_lsp' },
@@ -82,19 +83,18 @@ return  {
 	end
       },
       window = {
-	preselect = require('cmp').PreselectMode.None,
 	completion = {
 	  autocomplete = false,
-	  completeopt = 'menu,menuone,noinsert,noselect',
+	  completeopt  = 'menu,menuone,noinsert,noselect',
 	  winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
 	},
 	documentation = cmp.config.window.bordered {
-	  border = "rounded",
+	  border       = "rounded",
 	  winhighlight = "NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder",
-	  max_width = 50,
-	  min_width = 50,
-	  max_height = math.floor(vim.o.lines * 0.4),
-	  min_height = 3,
+	  max_width    = 50,
+	  min_width    = 50,
+	  max_height   = math.floor(vim.o.lines * 0.4),
+	  min_height   = 3,
 	}
       }
     }

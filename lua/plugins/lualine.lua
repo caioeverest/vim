@@ -6,7 +6,7 @@ return {
 	config = function()
 		require('lualine').setup {
 			options = {
-				theme = 'horizon',
+				theme = 'auto',
 				component_separators = '|',
 				-- section_separators = { left = '', right = '' },
 			},
