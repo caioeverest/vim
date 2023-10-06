@@ -82,11 +82,14 @@ return  {
 	  return kind
 	end
       },
+      completion = {
+	completeopt  = 'menu,menuone,noinsert,noselect',
+	winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
+      },
       window = {
 	completion = {
 	  autocomplete = false,
 	  completeopt  = 'menu,menuone,noinsert,noselect',
-	  winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
 	},
 	documentation = cmp.config.window.bordered {
 	  border       = "rounded",
