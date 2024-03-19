@@ -16,7 +16,7 @@ if [[ -n $(git status --porcelain) ]]; then
   # Create the prompt with the staged_diff
   template=$(cat <<EOF
 {
-  "model": "gpt-3.5-turbo",
+  "model": "gpt-4-turbo-preview",
   "messages": [
     {
       "role": "system",
@@ -39,13 +39,13 @@ EOF)
   # Extract the suggested commit message from the response
   commit_message=$(echo "$response" | jq -r '.choices[0].message.content')
   echo "Committing with message: $commit_message"
+  rm openai_req.json
 
   # Configure the committer email for this commit
   git config user.email "$committer_email"
-  
+
   # Commit with a generic message
   git commit -m "$commit_message"
-  rm openai_req.json
 
   # Set the SSH key for this push and push the commit to upstream
   GIT_SSH_COMMAND="ssh -i $ssh_key_path" git push 
