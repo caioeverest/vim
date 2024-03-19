@@ -332,7 +332,6 @@ end
 --  define the property 'filetypes' to the map in question.
 local servers = {
   gopls         = {},
-  solargraph    = {},
   rust_analyzer = {},
   tsserver      = {},
   html          = { filetypes = { 'html', 'twig', 'hbs'} },

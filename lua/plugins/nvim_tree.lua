@@ -38,7 +38,7 @@ return {
 				},
 			},
 			view = {
-				side = 'left',
+				side = 'right',
 				width = 30,
 				adaptive_size = true,
 			},
