@@ -15,7 +15,7 @@ return   {
       ignore_install   = {},
       modules          = {},
       auto_install     = true,
-      ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'ruby', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim' },
+      ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'ruby', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'c_sharp' },
 
       rainbow = {
         enable   = true,
