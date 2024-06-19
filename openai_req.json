@@ -1,0 +1,13 @@
+{
+  "model": "gpt-4-turbo-preview",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are a helpful assistant that generates commit messages."
+    },
+    {
+      "role": "user",
+      "content": "Generate a commit message and details for the following changes:\n\n\n\nSuggestion:"
+    }
+  ]
+}

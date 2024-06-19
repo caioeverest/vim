@@ -13,9 +13,8 @@ local config = function ()
 	local format_sync_grp = vim.api.nvim_create_augroup("GoImport", {})
 
 	api.setup({
-		goimport            = 'gopls', -- if set to 'gopls' will use golsp format
+		goimports           = 'gopls', -- if set to 'gopls' will use golsp format
 		gofmt               = 'gopls', -- if set to gopls will use golsp format
-		max_line_len        = 120,
 		tag_transform       = false,
 		comment_placeholder = 'ﳑ',
 		lsp_cfg             = { capabilities = capabilities },

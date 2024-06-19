@@ -48,7 +48,8 @@ EOF)
   git commit -m "$commit_message"
 
   # Set the SSH key for this push and push the commit to upstream
-  GIT_SSH_COMMAND="ssh -i $ssh_key_path" git push 
+  # GIT_SSH_COMMAND="ssh -i $ssh_key_path" git push 
+  git push 
 else
   echo "No changes detected"
 fi
