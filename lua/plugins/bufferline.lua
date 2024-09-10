@@ -10,7 +10,6 @@ return {
         mode                         = "tabs", -- set to "tabs" to only show tabpages instead
         style_preset                 = bufferline.style_preset.minimal,
         diagnostics                  = "nvim_lsp",
-        diagnostics_update_in_insert = true, -- The diagnostics indicator can be set to nil to keep the buffer name highlight but delete the highlighting
         offsets                      = {{filetype = "NvimTree", text = "File Explorer"}},
         show_tab_indicators          = true,
         enforce_regular_tabs         = true,
