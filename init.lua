@@ -36,7 +36,7 @@ require('lazy').setup({
   'tpope/vim-sleuth',
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim',  opts = {} },
+  { 'folke/which-key.nvim', opts = {} },
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
@@ -55,15 +55,23 @@ require('lazy').setup({
         -- don't override the built-in and fugitive keymaps
         local gs = package.loaded.gitsigns
         vim.keymap.set({ 'n', 'v' }, ']c', function()
-          if vim.wo.diff then return ']c' end
-          vim.schedule(function() gs.next_hunk() end)
+          if vim.wo.diff then
+            return ']c'
+          end
+          vim.schedule(function()
+            gs.next_hunk()
+          end)
           return '<Ignore>'
-        end, { expr = true, buffer = bufnr, desc = "Jump to next hunk" })
+        end, { expr = true, buffer = bufnr, desc = 'Jump to next hunk' })
         vim.keymap.set({ 'n', 'v' }, '[c', function()
-          if vim.wo.diff then return '[c' end
-          vim.schedule(function() gs.prev_hunk() end)
+          if vim.wo.diff then
+            return '[c'
+          end
+          vim.schedule(function()
+            gs.prev_hunk()
+          end)
           return '<Ignore>'
-        end, { expr = true, buffer = bufnr, desc = "Jump to previous hunk" })
+        end, { expr = true, buffer = bufnr, desc = 'Jump to previous hunk' })
       end,
     },
   },
@@ -76,7 +84,7 @@ require('lazy').setup({
     end,
   },
 
-  { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
+  { 'lukas-reineke/indent-blankline.nvim', main = 'ibl', opts = {} },
 
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim', opts = {} },
@@ -103,7 +111,27 @@ require('lazy').setup({
   },
 
   { import = 'plugins' },
-}, {})
+}, {
+  ui = {
+    -- If you are using a Nerd Font: set icons to an empty table which will use the
+    -- default lazy.nvim defined Nerd Font icons, otherwise define a unicode icons table
+    icons = vim.g.have_nerd_font and {} or {
+      cmd = '⌘',
+      config = '🛠',
+      event = '📅',
+      ft = '📂',
+      init = '⚙',
+      keys = '🗝',
+      plugin = '🔌',
+      runtime = '💻',
+      require = '🌙',
+      source = '📄',
+      start = '🚀',
+      task = '📌',
+      lazy = '💤 ',
+    },
+  },
+})
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
@@ -188,7 +216,7 @@ vim.keymap.set('n', '<S-Tab>', ':tabprevious<cr>', { silent = true })
 vim.keymap.set('n', '<Tab>', ':tabnext<cr>', { silent = true })
 
 -- Ctrl+g to duplicate visual selection
-vim.keymap.set('v', '<C-d>', 'y\'>p', { silent = true })
+vim.keymap.set('v', '<C-d>', "y'>p", { silent = true })
 
 -- Encode base64
 vim.keymap.set('v', '<leader>64e', 'c<c-r>=system("base64", @")<cr><esc>', { silent = true })
