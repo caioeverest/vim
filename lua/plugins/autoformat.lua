@@ -32,16 +32,13 @@ return { -- Autoformat
     end,
     formatters_by_ft = {
       lua = { 'stylua' },
-      go = { 'goimports-reviser', 'golines' },
-      -- Conform can also run multiple formatters sequentially
-      -- python = { "isort", "black" },
-      --
-      -- You can use 'stop_after_first' to run the first available formatter from the list
-      -- javascript = { "prettierd", "prettier", stop_after_first = true },
+      go = { 'golines', 'goimports', 'gofumpt' },
+      proto = { 'buf' },
+      yaml = { 'yamlfmt' },
     },
     formatters = {
-      ['goimports-reviser'] = { prepend_args = { '-rm-unused' } },
-      golines = { prepend_args = { '--max-len=80' } },
+      goimports = { prepend_args = { '-local "github.com/NSXBet"' } },
+      golines = { prepend_args = { '--max-len=130' } },
     },
   },
 }

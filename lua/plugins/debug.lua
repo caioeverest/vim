@@ -7,9 +7,7 @@
 -- kickstart.nvim and not kitchen-sink.nvim ;)
 
 return {
-  -- NOTE: Yes, you can install new plugins here!
   'mfussenegger/nvim-dap',
-  -- NOTE: And you can specify dependencies as well
   dependencies = {
     'nvim-neotest/nvim-nio',
     -- Creates a beautiful debugger UI
@@ -21,10 +19,37 @@ return {
 
     -- Add your own debuggers here
     'leoluz/nvim-dap-go',
+
+    -- Vscode config file adapter
+    'mxsdev/nvim-dap-vscode-js',
   },
   config = function()
     local dap = require 'dap'
     local dapui = require 'dapui'
+
+    require('dap-vscode-js').setup {
+      debugger_path = vim.fn.stdpath 'data' .. '/mason/packages/js-debug-adapter',
+      debugger_cmd = { 'js-debug-adapter' },
+      adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost' },
+    }
+
+    -- custom adapter for running tasks before starting debug
+    local custom_adapter = 'pwa-node-custom'
+    dap.adapters[custom_adapter] = function(cb, config)
+      if config.preLaunchTask then
+        local async = require 'plenary.async'
+        local notify = require('notify').async
+
+        async.run(function()
+          ---@diagnostic disable-next-line: missing-parameter
+          notify('Running [' .. config.preLaunchTask .. ']').events.close()
+        end, function()
+          vim.fn.system(config.preLaunchTask)
+          config.type = 'pwa-node'
+          dap.run(config)
+        end)
+      end
+    end
 
     require('mason-nvim-dap').setup {
       -- Makes a best effort to setup the various debuggers with

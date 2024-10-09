@@ -124,12 +124,12 @@ return {
     --  If you want to override the default filetypes that your language server will attach to you can
     --  define the property 'filetypes' to the map in question.
     local servers = {
-      rust_analyzer = { filetypes = { 'rust' } },
       html = { filetypes = { 'html', 'twig', 'hbs' } },
-      yamlls = { filetypes = { 'yml', 'yaml' } },
+      yamllint = { filetypes = { 'yml', 'yaml' } },
       taplo = { filetypes = { 'toml' } },
       bashls = { filetypes = { 'sh', 'bash' } },
       gopls = {},
+      buf = { filetypes = { 'proto' } },
 
       lua_ls = {
         settings = {
