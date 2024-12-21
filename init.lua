@@ -5,6 +5,7 @@ in_wsl = os.getenv 'WSL_DISTRO_NAME' ~= nil
 
 vim.g.mapleader = ','
 vim.g.maplocalleader = ','
+vim.opt.clipboard:append { 'unnamed', 'unnamedplus' }
 if in_wsl then
   vim.g.clipboard = {
     name = 'wsl-clip',
