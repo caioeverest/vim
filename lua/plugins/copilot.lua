@@ -5,21 +5,18 @@ return {
   event = 'BufReadPost',
   opts = {
     suggestion = {
-      enabled = not vim.g.ai_cmp,
+      enabled = true,
       auto_trigger = true,
-      hide_during_completion = vim.g.ai_cmp,
+      hide_during_completion = false,
+      trigger_on_accept = true,
       keymap = {
-        accept = false, -- handled by nvim-cmp / blink.cmp
-        next = '<M-]>',
-        prev = '<M-[>',
+        accept = '<C-l>',
+        accept_word = false,
+        accept_line = false,
+        next = '<C-.>',
+        prev = '<C-,>',
+        dismiss = '<C-]>',
       },
-    },
-    panel = { enabled = true },
-    filetypes = {
-      golang = true,
-
-      markdown = true,
-      help = true,
     },
   },
 }
