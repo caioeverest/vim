@@ -15,6 +15,7 @@ return {
       },
       on_attach = function(bufnr)
         local gitsigns = require 'gitsigns'
+        gitsigns.toggle_current_line_blame()
 
         local function map(mode, l, r, opts)
           opts = opts or {}
