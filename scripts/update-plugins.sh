@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# Script to update plugins with deprecation issues
+
+echo "Updating Neovim plugins to fix deprecation warnings..."
+echo ""
+echo "The deprecation warnings are coming from these plugins:"
+echo "1. telescope.nvim - Using deprecated client.supports_method and vim.lsp.util.jump_to_location"
+echo "2. mason-nvim-dap.nvim - Using deprecated vim.validate format"
+echo ""
+echo "To update these plugins, run the following in Neovim:"
+echo ""
+echo ":Lazy update telescope.nvim"
+echo ":Lazy update mason-nvim-dap.nvim"
+echo ""
+echo "Or update all plugins with:"
+echo ":Lazy update"
+echo ""
+echo "Note: A temporary fix has been applied in lua/deprecation-fix.lua"
+echo "This patches the deprecated functions to work with both old and new formats."
+echo ""
+echo "If issues persist after updating, consider:"
+echo "1. Checking if newer versions of the plugins are available"
+echo "2. Reporting the deprecation issues to the plugin maintainers:"
+echo "   - https://github.com/nvim-telescope/telescope.nvim/issues"
+echo "   - https://github.com/jay-babu/mason-nvim-dap.nvim/issues"
