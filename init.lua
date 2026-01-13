@@ -16,7 +16,7 @@ if in_wsl then
 end
 
 -- Prepend mise shims to PATH
-vim.env.PATH = vim.env.HOME .. '/.local/share/mise/shims:' .. vim.env.PATH
+-- vim.env.PATH = vim.env.HOME .. '/.local/share/mise/shims:' .. vim.env.PATH
 
 -- Install package manager
 --    https://github.com/folke/lazy.nvim
