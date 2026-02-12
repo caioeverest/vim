@@ -26,19 +26,22 @@ return { -- Autoformat
         lsp_format_opt = 'fallback'
       end
       return {
-        timeout_ms = 500,
+        timeout_ms = 3000,
         lsp_format = lsp_format_opt,
       }
     end,
     formatters_by_ft = {
       lua = { 'stylua' },
-      go = { 'golines', 'goimports', 'gofumpt' },
+      go = { 'golines', 'gosimports', 'gofumpt' },
       proto = { 'buf' },
       yaml = { 'yamlfmt' },
     },
     formatters = {
-      goimports = { prepend_args = { '-local "github.com/NSXBet"' } },
-      golines = { prepend_args = { '--max-len=130' } },
+      golines = { prepend_args = { '--base-formatter=gofmt', '--ignore-generated', '--max-len=130' } },
+      gosimports = {
+        command = 'gosimports',
+        args = { '-local', 'github.com/NSXBet' },
+      },
     },
   },
 }
