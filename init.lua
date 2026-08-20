@@ -5,7 +5,6 @@ in_wsl = os.getenv 'WSL_DISTRO_NAME' ~= nil
 
 vim.g.mapleader = ','
 vim.g.maplocalleader = ','
-vim.opt.clipboard:append { 'unnamed', 'unnamedplus' }
 if in_wsl then
   vim.g.clipboard = {
     name = 'wsl-clip',
@@ -15,8 +14,18 @@ if in_wsl then
   }
 end
 
--- Prepend mise shims to PATH
--- vim.env.PATH = vim.env.HOME .. '/.local/share/mise/shims:' .. vim.env.PATH
+-- Prepend mise shims to PATH so LSP servers and formatters resolve the
+-- project-pinned toolchain even when nvim is launched outside a mise shell.
+local mise_shims = vim.env.HOME .. '/.local/share/mise/shims'
+if vim.uv.fs_stat(mise_shims) then
+  vim.env.PATH = mise_shims .. ':' .. vim.env.PATH
+end
+
+-- A stale inherited GOROOT/GOBIN pins a different toolchain than the `go` on
+-- PATH, which makes gopls fail with "does not match go tool version" and breaks
+-- go-to-definition and import fixing. Let the go binary derive them instead.
+vim.env.GOROOT = nil
+vim.env.GOBIN = nil
 
 -- Install package manager
 --    https://github.com/folke/lazy.nvim

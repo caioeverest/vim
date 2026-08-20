@@ -186,6 +186,13 @@ return {
     --  So, we create new capabilities with blink.cmp, and then broadcast that to the servers.
     local capabilities = require('blink.cmp').get_lsp_capabilities()
 
+    -- Prefer the mise-managed gopls so it matches the toolchain that builds the
+    -- project; Mason ships its own, usually older, copy.
+    local mise_gopls = vim.env.HOME .. '/.local/share/mise/shims/gopls'
+    if vim.fn.executable(mise_gopls) == 0 then
+      mise_gopls = nil
+    end
+
     -- Enable the following language servers
     --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
     --
@@ -197,7 +204,18 @@ return {
     --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
     local servers = {
       -- clangd = {},
-      gopls = {},
+      gopls = {
+        cmd = mise_gopls and { mise_gopls } or nil,
+        settings = {
+          gopls = {
+            usePlaceholders = true,
+            completeUnimported = true,
+            staticcheck = true,
+            analyses = { unusedparams = true },
+          },
+        },
+      },
+      marksman = {},
       -- pyright = {},
       -- rust_analyzer = {},
       -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
@@ -244,19 +262,16 @@ return {
     })
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
+    -- mason-lspconfig v2 dropped `handlers` and enables installed servers itself,
+    -- so per-server overrides have to be registered through vim.lsp.config.
+    for server_name, server in pairs(servers) do
+      server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+      vim.lsp.config(server_name, server)
+    end
+
     require('mason-lspconfig').setup {
       ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
       automatic_installation = false,
-      handlers = {
-        function(server_name)
-          local server = servers[server_name] or {}
-          -- This handles overriding only values explicitly passed
-          -- by the server configuration above. Useful when disabling
-          -- certain features of an LSP (for example, turning off formatting for ts_ls)
-          server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-          require('lspconfig')[server_name].setup(server)
-        end,
-      },
     }
   end,
 }
