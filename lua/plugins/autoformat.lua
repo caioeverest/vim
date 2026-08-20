@@ -32,15 +32,14 @@ return { -- Autoformat
     end,
     formatters_by_ft = {
       lua = { 'stylua' },
-      go = { 'golines', 'gosimports', 'gofumpt' },
+      go = { 'golines', 'goimports', 'gofumpt' },
       proto = { 'buf' },
       yaml = { 'yamlfmt' },
     },
     formatters = {
       golines = { prepend_args = { '--base-formatter=gofmt', '--ignore-generated', '--max-len=130' } },
-      gosimports = {
-        command = 'gosimports',
-        args = { '-local', 'github.com/NSXBet' },
+      goimports = {
+        prepend_args = { '-local', 'github.com/NSXBet' },
       },
     },
   },

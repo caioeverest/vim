@@ -1,6 +1,4 @@
-# CLAUDE.md
-
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to AI Agents when working with code in this repository.
 
 ## Project Overview
 
@@ -71,7 +69,6 @@ Configured for Go (delve) and JavaScript (via dap-vscode-js). Keymaps: `F5` cont
 
 - `<leader>g` — lazygit (float)
 - `<leader>d` — ctop (float, container monitoring)
-- `<leader>c` — Claude Code (vertical split, 40% width)
 - `<C-]>` — Session-scoped horizontal terminal
 - Terminal mode: `<esc>` or `jk` exits to normal mode, `<C-h/j/k/l>` for window navigation
 
