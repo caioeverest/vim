@@ -46,12 +46,47 @@ vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]resume' })
 
--- Copy relative file path to clipboard
-vim.keymap.set('n', '<leader>fp', function()
-  local path = vim.fn.expand '%:.'
+-- Copy path of the current buffer or Neo-tree selection to clipboard
+local function copy_path(opts)
+  local relative = opts ~= nil and opts.args == 'relative'
+  local path
+
+  if vim.bo.filetype == 'neo-tree' then
+    local state = require('neo-tree.sources.manager').get_state_for_window()
+    local node = state and state.tree and state.tree:get_node()
+    path = node and node.path
+  else
+    path = vim.api.nvim_buf_get_name(0)
+  end
+
+  if path == nil or path == '' or vim.fn.isdirectory(path) == 1 then
+    vim.notify('No file selected', vim.log.levels.WARN)
+    return
+  end
+
+  path = vim.fn.fnamemodify(path, relative and ':.' or ':p')
   vim.fn.setreg('+', path)
   vim.notify('Copied: ' .. path)
-end, { desc = 'Copy relative file path', silent = true })
+end
+
+vim.api.nvim_create_user_command('CopyPath', copy_path, {
+  desc = 'Copy the current buffer or Neo-tree selection path (absolute)',
+  nargs = '?',
+  complete = function(arg)
+    return vim.tbl_filter(function(item)
+      return item:find(arg, 1, true) == 1
+    end, { 'relative' })
+  end,
+})
+
+vim.keymap.set('n', '<leader>fp', ':CopyPath relative<cr>', {
+  desc = 'Copy relative file path',
+  silent = true,
+})
+vim.keymap.set('n', '<leader>fP', ':CopyPath<cr>', {
+  desc = 'Copy absolute file path',
+  silent = true,
+})
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', function()
